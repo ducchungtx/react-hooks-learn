@@ -1,22 +1,42 @@
 import React, { Component } from 'react';
 import './App.css';
 
-function Box(props) {
-  return(
-    <div>
-      <h1>{props.text}</h1>
-      <h2>{props.subtitle}</h2>
-    </div>
-  )
+class Button extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      actived: false
+    };
+    this.handleActiveChange = this.handleActiveChange.bind(this);
+  }
+
+  handleActiveChange() {
+    this.setState((prevState) => {
+      return{
+        actived: !prevState.actived
+      }
+    });
+  }
+
+  render() {
+    const buttonText = this.state.actived ? this.props.activeText : this.props.inactiveText;
+    return(
+      <button onClick={this.handleActiveChange}>
+        {buttonText}
+      </button>
+    )
+  }
 }
 
-function App() {
-  return(
-    <Box 
-      text="Hi, Boris"
-      subtitle="I love React!"
-    />
-  )
+class App extends Component {
+  render() {
+    return(
+      <Button
+        activeText="ON"
+        inactiveText="OFF"
+      />
+    )
+  }
 }
 
 export default App;
