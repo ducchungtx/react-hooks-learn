@@ -1,42 +1,15 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
-class Button extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      actived: false
-    };
-    this.handleActiveChange = this.handleActiveChange.bind(this);
-  }
-
-  handleActiveChange() {
-    this.setState((prevState) => {
-      return{
-        actived: !prevState.actived
-      }
-    });
-  }
-
-  render() {
-    const buttonText = this.state.actived ? this.props.activeText : this.props.inactiveText;
-    return(
-      <button onClick={this.handleActiveChange}>
-        {buttonText}
-      </button>
-    )
-  }
-}
-
-class App extends Component {
-  render() {
-    return(
-      <Button
-        activeText="ON"
-        inactiveText="OFF"
-      />
-    )
-  }
+function App() {
+  // useState sẽ trả về một array có chứa 2 item
+  // một là giá trị 2 là hàm để set lại giá trị
+  const [ activated, setActivated ] = useState(false);
+  const buttonText = activated ? 'Active' : 'Inactive';
+  const onClick = () => setActivated(!activated);
+  return(
+    <button onClick={onClick}>{ buttonText }</button>
+  )
 }
 
 export default App;
