@@ -1,29 +1,59 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component, createContext } from 'react';
 import './App.css';
 
-function App() { 
-  const [userText, setUserText] = useState('');
-  function handUserKeyPress(event) {
-    const { key, keyCode } = event;
-    if(keyCode === 32 || (keyCode >= 65 && keyCode <= 90)) {
-      setUserText(`${userText}${key}`)
+const NameContext = createContext()
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: 'Chung Nguyen'
     }
   }
-  useEffect(() => {
-    window.addEventListener('keydown', handUserKeyPress)
-    return () => {
-      window.removeEventListener('keydown', handUserKeyPress)
-    }
-  })
 
-  return(
-    <div>
-      <h1>Feel free to type! Your text will show up below!</h1>
-      <blockquote>
-        { userText }
-      </blockquote>
-    </div>
-  )
+  render() {
+    return(
+      <NameContext.Provider value={this.state.name}>
+        <Child/>
+      </NameContext.Provider>
+    )
+  }
 }
+
+class Child extends Component {
+  render() {
+    return(
+      <section className="child">
+        <Grandchild />
+      </section>
+    )
+  }
+}
+
+class Grandchild extends Component {
+  render() {
+    return(
+      <div className="grandchild">
+        <Button />
+      </div>
+    )
+  }
+}
+
+class Button extends Component {
+  render() {
+    return(
+      <NameContext.Consumer>
+        {
+          name => <button>{name}</button>
+        }
+      </NameContext.Consumer>
+    )
+  }
+}
+
+// ThemeContext
+// LanguageContext
+// TimezoneContext
 
 export default App;
