@@ -1,50 +1,42 @@
 import React, { useState } from 'react';
 import './App.css';
 
-function useCounter(startingValue) {
-  const [count, setCount] = useState(startingValue);
-  const handleIncrease = () => setCount(count + 1);
-  const handleDecrease= () => setCount(count - 1);
-  const handleReset = () => setCount(0);
+function useInput() {
+  const [value, setValue] = useState('')
+  function onChange(event) {
+    setValue(event.target.value);
+  }
   return {
-    handleIncrease,
-    handleDecrease,
-    handleReset,
-    count
+    value,
+    onChange
   }
 }
 
-function Display(props) {
-  const { count, handleDecrease, handleIncrease, handleReset } = useCounter(props.start);
-  return(
-    <div>
-      <button onClick={handleIncrease}>Increase</button>
-      <button onClick={handleDecrease}>Decrease</button>
-      <button onClick={handleReset}>Reset</button>
-      <h1>{count}</h1>
-    </div>
-  )
-}
-
-function FancyDisplay(props) {
-  const { count, handleDecrease, handleIncrease, handleReset } = useCounter(props.start);
-  return(
-    <section>
-      <button onClick={handleIncrease}>Increase</button>
-      <button onClick={handleDecrease}>Decrease</button>
-      <button onClick={handleReset}>Reset</button>
-      <h2>{count}</h2>
-    </section>
-  )
-}
-
 function App() {
+  const { value: name, onChange: handleNameChange } = useInput()
+  const { value: surname, onChange: handleSurnameChange } = useInput()
+  const { value: age, onChange: handleAgeChange } = useInput()
   return(
-    <div>
-      <Display start={10} />
-      <Display start={20} />
-      <FancyDisplay start={30}/>
-    </div>
+    <form>
+      <input
+        type="text"
+        placeholder="Name"
+        value={name}
+        onChange={handleNameChange}
+      />
+      <input
+        type="text"
+        placeholder="SurName"
+        value={surname}
+        onChange={handleSurnameChange}
+      />
+      <input
+        type="text"
+        placeholder="Age"
+        value={age}
+        onChange={handleAgeChange}
+      />
+    </form>
   )
 }
 
