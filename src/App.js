@@ -1,34 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 
-function App() {
-  const userText = useKeyPress('Once upon a time...');
+function useCounter(startingValue) {
+  const [count, setCount] = useState(startingValue);
+  const handleIncrease = () => setCount(count + 1);
+  const handleDecrease= () => setCount(count - 1);
+  const handleReset = () => setCount(0);
+  return {
+    handleIncrease,
+    handleDecrease,
+    handleReset,
+    count
+  }
+}
+
+function Display(props) {
+  const { count, handleDecrease, handleIncrease, handleReset } = useCounter(props.start);
   return(
     <div>
-      <h1>Feel free to type! Your text will show up bellow!</h1>
-      <blockquote>
-        { userText }
-      </blockquote>
+      <button onClick={handleIncrease}>Increase</button>
+      <button onClick={handleDecrease}>Decrease</button>
+      <button onClick={handleReset}>Reset</button>
+      <h1>{count}</h1>
     </div>
   )
 }
 
-function useKeyPress(startingValue) {
-  const [userText, setUserText] = useState(startingValue);
-  function handUserKeyPress(event) {
-    const { key, keyCode } = event;
-    if(keyCode === 32 || (keyCode >= 65 && keyCode <= 90)) {
-      setUserText(`${userText}${key}`)
-    }
-  }
-  // Component lifecycle
-  useEffect(() => {
-    window.addEventListener('keydown', handUserKeyPress)
-    return () => {
-      window.removeEventListener('keydown', handUserKeyPress)
-    }
-  })
-  return userText;
+function FancyDisplay(props) {
+  const { count, handleDecrease, handleIncrease, handleReset } = useCounter(props.start);
+  return(
+    <section>
+      <button onClick={handleIncrease}>Increase</button>
+      <button onClick={handleDecrease}>Decrease</button>
+      <button onClick={handleReset}>Reset</button>
+      <h2>{count}</h2>
+    </section>
+  )
+}
+
+function App() {
+  return(
+    <div>
+      <Display start={10} />
+      <Display start={20} />
+      <FancyDisplay start={30}/>
+    </div>
+  )
 }
 
 export default App;
