@@ -13,28 +13,22 @@ function useInput() {
 }
 
 function App() {
-  const { value: name, onChange: handleNameChange } = useInput()
-  const { value: surname, onChange: handleSurnameChange } = useInput()
-  const { value: age, onChange: handleAgeChange } = useInput()
   return(
     <form>
       <input
         type="text"
         placeholder="Name"
-        value={name}
-        onChange={handleNameChange}
+        { ...useInput() }
       />
       <input
         type="text"
         placeholder="SurName"
-        value={surname}
-        onChange={handleSurnameChange}
+        { ...useInput() }
       />
       <input
         type="text"
         placeholder="Age"
-        value={age}
-        onChange={handleAgeChange}
+        { ...useInput() }
       />
     </form>
   )
