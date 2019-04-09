@@ -1,55 +1,38 @@
-import React, { Component, createContext } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 import './App.css';
 
 const NameContext = createContext()
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: 'Chung Nguyen'
-    }
-  }
-
-  render() {
-    return(
-      <NameContext.Provider value={this.state.name}>
+function App() {
+  const [name, setName] = useState('Chung Nguyen');
+  return(
+    <NameContext.Provider value={name}>
         <Child/>
       </NameContext.Provider>
-    )
-  }
+  )
 }
 
-class Child extends Component {
-  render() {
-    return(
-      <section className="child">
-        <Grandchild />
-      </section>
-    )
-  }
+function Child() {
+  return(
+    <section className="child">
+      <Grandchild />
+    </section>
+  )
 }
 
-class Grandchild extends Component {
-  render() {
-    return(
-      <div className="grandchild">
-        <Button />
-      </div>
-    )
-  }
+function Grandchild() {
+  return(
+    <div className="grandchild">
+      <Button />
+    </div>
+  )
 }
 
-class Button extends Component {
-  render() {
-    return(
-      <NameContext.Consumer>
-        {
-          name => <button>{name}</button>
-        }
-      </NameContext.Consumer>
-    )
-  }
+function Button() {
+  const name = useContext(NameContext);
+  return(
+    <button>{name}</button>
+  )
 }
 
 // ThemeContext
